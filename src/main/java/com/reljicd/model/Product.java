@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class Product {
 
     private Long id;
-    @Length(min = 5, message = "*Name must have at least 5 characters")
+    @Length(min = 3, message = "*Name must have at least 5 characters")
     private String name;
     private String description;
     @Min(value = 0, message = "*Quantity has to be non negative number")
@@ -38,7 +38,7 @@ public class Product {
         return name;
     }
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     public void setName(String name) {
         this.name = name;
     }

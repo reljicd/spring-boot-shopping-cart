@@ -16,6 +16,8 @@
         <span sec:authentication="name"></span>'s Shopping Cart
     </h1>
 
+    <div class="alert alert-info" th:if="${outOfStockMessage}" th:utext="${outOfStockMessage}"></div>
+
     <div class="panel-default well" th:each="product : ${products.entrySet()}">
         <div class="panel-heading">
             <h1><a th:text="${product.getKey().name}" th:href="@{'/product/' + ${product.getKey().id}}">Title</a></h1>

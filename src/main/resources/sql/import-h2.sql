@@ -27,15 +27,15 @@ INSERT INTO USER_ROLE (user_id, role_id)
 VALUES (3, 2);
 
 INSERT INTO PRODUCT (name, description, quantity, price)
-VALUES ('Soap', 'Pears baby soap for Kids', 100, 35.75);
+VALUES ('Soap', 'Pears baby soap for Kids', 1, 35.75);
 INSERT INTO PRODUCT (name, description, quantity, price)
-VALUES ('Tooth Brush', 'Signal Tooth Brushes Size in (L, M, S)', 500, 34.50);
+VALUES ('Tooth Brush', 'Signal Tooth Brushes Size in (L, M, S)', 5, 34.50);
 INSERT INTO PRODUCT (name, description, quantity, price)
-VALUES ('Shirt', 'Casual Shirt imported from France', 100, 1500.00);
+VALUES ('Shirt', 'Casual Shirt imported from France', 3, 1500.00);
 INSERT INTO PRODUCT (name, description, quantity, price)
-VALUES ('Office Bag', 'Leather bag imported from USA', 400, 1000.00);
+VALUES ('Office Bag', 'Leather bag imported from USA', 40, 1000.00);
 INSERT INTO PRODUCT (name, description, quantity, price)
-VALUES ('Bottle', 'Hot Water Bottles', 800, 450.45);
+VALUES ('Bottle', 'Hot Water Bottles', 80, 450.45);
 INSERT INTO PRODUCT (name, description, quantity, price)
 VALUES ('Wrist Watch', 'Imported wrist watches from swiss', 800, 2500.00);
 INSERT INTO PRODUCT (name, description, quantity, price)
