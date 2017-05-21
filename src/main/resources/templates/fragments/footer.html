@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+</head>
+
+<body>
+
+<!-- this is footer -->
+<div th:fragment="footer">
+    <div class="container">
+        <footer>
+            &copy; 2017 Dušan Reljić
+            <span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+                <a th:href="@{/logout}">Sign Out</a>
+            </span>
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>
