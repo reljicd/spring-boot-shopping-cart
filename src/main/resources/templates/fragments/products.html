@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+</head>
+
+<body>
+
+<div th:fragment="products">
+    <div class="panel-default well" th:each="product : ${products}">
+        <div class="panel-heading">
+            <h1><a th:text="${product.name}" th:href="@{'/product/' + ${product.id}}">Title</a></h1>
+        </div>
+        <h3 th:text="${product.description}" class="panel-body">Description</h3>
+        <div class="row panel-footer">
+            <div th:inline="text" class="col-md-11">Price: [[${product.price}]] $</div>
+            <a th:href="@{'/shoppingCart/addProduct/{id}'(id=${product.id})}" class="col-md-1"
+               sec:authorize="isAuthenticated()">
+                <button type="button" class="btn btn-primary" th:text="Buy">Buy</button>
+            </a>
+            <!--<button type="button" class="btn btn-primary col-md-1"-->
+            <!--th:text="Buy" sec:authorize="isAuthenticated()">Buy-->
+            <!--</button>-->
+        </div>
+        <br></br>
+    </div>
+</div>
+
+</body>
+</html>

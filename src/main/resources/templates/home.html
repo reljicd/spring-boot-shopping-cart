@@ -10,7 +10,11 @@
 <div th:replace="fragments/header :: navbar"/>
 
 <div class="container">
-    <h1>Secured App</h1>
+
+    <div th:replace="fragments/products :: products"/>
+
+    <div th:replace="fragments/pagination :: pagination(URLparameter='/home')"/>
+
 </div>
 
 <div th:replace="fragments/footer :: footer"/>

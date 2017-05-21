@@ -25,3 +25,24 @@ INSERT INTO USER_ROLE (user_id, role_id)
 VALUES (2, 2);
 INSERT INTO USER_ROLE (user_id, role_id)
 VALUES (3, 2);
+
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Soap', 'Pears baby soap for Kids', 100, 35.75);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Tooth Brush', 'Signal Tooth Brushes Size in (L, M, S)', 500, 34.50);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Shirt', 'Casual Shirt imported from France', 100, 1500.00);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Office Bag', 'Leather bag imported from USA', 400, 1000.00);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Bottle', 'Hot Water Bottles', 800, 450.45);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Wrist Watch', 'Imported wrist watches from swiss', 800, 2500.00);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Mobile Phone', '3G/4G capability', 700, 45000.00);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Shampoo', 'Head and Shoulders Shampoo', 500, 300.00);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Leather Wallets', 'Imported Leather Wallets from AUS', 1000, 500.00);
+INSERT INTO PRODUCT (name, description, quantity, price)
+VALUES ('Camera', 'Imported Canon camera from USA', 10, 85000.00);

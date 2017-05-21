@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="pagination">
+
+    <div class="row">
+        <div class="form-group col-md-1">
+            <select class="form-control pagination" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}" th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+        </div>
+        <div th:if="${products.totalPages != 1}" class="form-group col-md-11 pagination-centered" th:with="baseUrl=${URLparameter}">
+            <ul class="pagination">
+                <li th:class="${products.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
+                </li>
+                <li th:class="${products.number == 0} ? disabled">
+                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${products.number})}">&larr;</a>
+                </li>
+                <li th:class="${products.number == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>
+                </li>
+                <li th:class="${products.number + 1 == products.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${products.number + 2})}">&rarr;</a>
+                </li>
+                <li th:class="${products.number + 1 == products.totalPages} ? disabled">
+                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${products.totalPages})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
