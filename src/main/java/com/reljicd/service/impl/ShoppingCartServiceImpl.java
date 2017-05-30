@@ -71,12 +71,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return Collections.unmodifiableMap(products);
     }
 
+    /**
+     * Checkout will rollback if there is not enough of some product in stock
+     *
+     * @throws NotEnoughProductsInStockException
+     */
     @Override
     public void checkout() throws NotEnoughProductsInStockException {
+        Product product;
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            if (entry.getKey().getQuantity() < entry.getValue())
-                throw new NotEnoughProductsInStockException(entry.getKey());
-            entry.getKey().setQuantity(entry.getKey().getQuantity() - entry.getValue());
+            // Refresh quantity for every product before checking
+            product = productRepository.findOne(entry.getKey().getId());
+            if (product.getQuantity() < entry.getValue())
+                throw new NotEnoughProductsInStockException(product);
+            entry.getKey().setQuantity(product.getQuantity() - entry.getValue());
         }
         productRepository.save(products.keySet());
         productRepository.flush();
@@ -87,7 +95,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public BigDecimal getTotal() {
         BigDecimal total = BigDecimal.ZERO;
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-//            BigDecimal price = entry.getKey().getPrice().multiply(new BigDecimal(entry.getValue()));
             total = total.add(entry.getKey().getPrice().multiply(new BigDecimal(entry.getValue())));
         }
         return total;
