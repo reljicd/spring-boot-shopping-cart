@@ -6,18 +6,30 @@
 
 <body>
 
-<!-- this is footer -->
 <div th:fragment="footer">
+
+    <hr/>
+
     <div class="container">
-        <footer>
-            &copy; 2017 Dušan Reljić
-            <span sec:authorize="isAuthenticated()">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <span sec:authorize="isAuthenticated()">
                 | Logged user: <span sec:authentication="name"></span> |
                 Roles: <span sec:authentication="principal.authorities"></span> |
                 <a th:href="@{/logout}">Sign Out</a>
             </span>
-        </footer>
+
+                <div>
+                    <p class="text-center">&copy; 2017 Dusan Reljic</p>
+                </div>
+
+            </div>
+        </div>
     </div>
+
+    <script type="text/javascript"
+            src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </div>
 
 </body>
