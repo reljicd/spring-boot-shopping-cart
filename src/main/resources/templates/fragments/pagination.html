@@ -4,32 +4,33 @@
 <body>
 <div th:fragment="pagination">
 
-    <div class="row">
-        <div class="form-group col-md-1">
-            <select class="form-control pagination" id="pageSizeSelect">
-                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}" th:selected="${pageSize} == ${selectedPageSize}"></option>
-            </select>
-        </div>
-        <div th:if="${products.totalPages != 1}" class="form-group col-md-11 pagination-centered" th:with="baseUrl=${URLparameter}">
-            <ul class="pagination">
-                <li th:class="${products.number == 0} ? disabled">
-                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=1)}">&laquo;</a>
-                </li>
-                <li th:class="${products.number == 0} ? disabled">
-                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${products.number})}">&larr;</a>
-                </li>
-                <li th:class="${products.number == (page - 1)} ? 'active pointer-disabled'"
-                    th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
-                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${page})}" th:text="${page}"></a>
-                </li>
-                <li th:class="${products.number + 1 == products.totalPages} ? disabled">
-                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${products.number + 2})}">&rarr;</a>
-                </li>
-                <li th:class="${products.number + 1 == products.totalPages} ? disabled">
-                    <a class="pageLink" th:href="@{${baseUrl}(pageSize=${selectedPageSize}, page=${products.totalPages})}">&raquo;</a>
-                </li>
-            </ul>
-        </div>
+    <!-- Pagination -->
+    <div class="pagination" th:with="baseUrl=${URLparameter}">
+        <span th:if="${pager.indexOutOfBounds()}">
+            Page is out of bounds. Go back to <a class="pageLink"
+                                                 th:href="@{${baseUrl}(page=1)}">Home</a>.
+        </span>
+
+        <span th:unless="${pager.indexOutOfBounds()}">
+
+            <span th:if="${pager.hasPrevious()}">
+                <a class="pageLink"
+                   th:href="@{${baseUrl}(page=1)}">&laquo; first</a>
+                <a class="pageLink"
+                   th:href="@{${baseUrl}(page=${pager.getPageIndex() - 1})}"> previous</a>
+            </span>
+
+            <span th:if="${pager.getTotalPages() != 1}"
+                  th:text="'Page ' + ${pager.getPageIndex()} + ' of ' + ${pager.getTotalPages()} + '.'">
+            </span>
+
+            <span th:if="${pager.hasNext()}">
+                <a class="pageLink"
+                   th:href="@{${baseUrl}(page=${pager.getPageIndex() + 1})}">next</a>
+                <a class="pageLink"
+                   th:href="@{${baseUrl}(page=${pager.getTotalPages()})}">last &raquo;</a>
+            </span>
+        </span>
     </div>
 
 </div>
