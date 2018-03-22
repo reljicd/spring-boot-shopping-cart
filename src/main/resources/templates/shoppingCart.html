@@ -3,12 +3,12 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
-    <div th:replace="fragments/header :: header"/>
+    <div th:replace="/fragments/header :: header"/>
 </head>
 
 <body>
 
-<div th:replace="fragments/header :: navbar"/>
+<div th:replace="/fragments/header :: navbar"/>
 
 <div class="container">
 
@@ -42,7 +42,7 @@
 
 </div>
 
-<div th:replace="fragments/footer :: footer"/>
+<div th:replace="/fragments/footer :: footer"/>
 
 </body>
 </html>

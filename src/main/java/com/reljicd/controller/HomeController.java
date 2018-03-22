@@ -49,7 +49,7 @@ public class HomeController {
         modelAndView.addObject("selectedPageSize", evalPageSize);
         modelAndView.addObject("pageSizes", PAGE_SIZES);
         modelAndView.addObject("pager", pager);
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("/home");
         return modelAndView;
     }
 

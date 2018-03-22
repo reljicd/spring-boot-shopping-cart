@@ -24,7 +24,7 @@ public class ErrorController {
     public ModelAndView exception(final Throwable throwable, final Model model) {
         logger.error("Exception during execution of SpringSecurity application", throwable);
 
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("/error");
         String errorMessage = (throwable != null ? throwable.toString() : "Unknown error");
         modelAndView.addObject("errorMessage", errorMessage);
         return modelAndView;
