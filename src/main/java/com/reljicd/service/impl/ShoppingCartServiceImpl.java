@@ -26,10 +26,14 @@ import java.util.Map;
 @Transactional
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     private Map<Product, Integer> products = new HashMap<>();
+
+    @Autowired
+    public ShoppingCartServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     /**
      * If product is in the map just increment quantity by 1.

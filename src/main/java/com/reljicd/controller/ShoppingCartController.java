@@ -15,11 +15,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ShoppingCartController {
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
+
+    private final ProductService productService;
 
     @Autowired
-    private ProductService productService;
+    public ShoppingCartController(ShoppingCartService shoppingCartService, ProductService productService) {
+        this.shoppingCartService = shoppingCartService;
+        this.productService = productService;
+    }
 
 
     @GetMapping("/shoppingCart")
