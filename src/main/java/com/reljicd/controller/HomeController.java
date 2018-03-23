@@ -13,9 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
-/**
- * Created by Dusan on 19-May-17.
- */
 @Controller
 public class HomeController {
 
