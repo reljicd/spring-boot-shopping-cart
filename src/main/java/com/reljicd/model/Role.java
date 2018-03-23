@@ -7,13 +7,17 @@ import java.util.Collection;
 @Table(name = "role")
 public class Role {
 
-    private Long id;
-    private String role;
-    private Collection<User> users;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "role_id")
+    private Long id;
+
+    @Column(name = "role", unique = true)
+    private String role;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roles")
+    private Collection<User> users;
+
     public Long getId() {
         return id;
     }
@@ -22,7 +26,6 @@ public class Role {
         this.id = id;
     }
 
-    @Column(name = "role", unique = true)
     public String getRole() {
         return role;
     }
@@ -31,7 +34,6 @@ public class Role {
         this.role = role;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roles")
     public Collection<User> getUsers() {
         return users;
     }

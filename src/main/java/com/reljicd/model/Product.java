@@ -7,25 +7,30 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 
-/**
- * Created by sahan on 4/8/2016.
- */
 @Entity
 @Table(name = "product")
 public class Product {
 
-    private Long id;
-    @Length(min = 3, message = "*Name must have at least 5 characters")
-    private String name;
-    private String description;
-    @Min(value = 0, message = "*Quantity has to be non negative number")
-    private Integer quantity;
-    @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
-    private BigDecimal price;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
+    private Long id;
+
+    @Column(name = "name", nullable = false, unique = true)
+    @Length(min = 3, message = "*Name must have at least 5 characters")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "quantity", nullable = false)
+    @Min(value = 0, message = "*Quantity has to be non negative number")
+    private Integer quantity;
+
+    @Column(name = "price", nullable = false)
+    @DecimalMin(value = "0.00", message = "*Price has to be non negative number")
+    private BigDecimal price;
+
     public Long getId() {
         return id;
     }
@@ -38,12 +43,10 @@ public class Product {
         return name;
     }
 
-    @Column(name = "name", nullable = false, unique = true)
     public void setName(String name) {
         this.name = name;
     }
 
-    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -52,7 +55,6 @@ public class Product {
         this.description = description;
     }
 
-    @Column(name = "quantity", nullable = false)
     public Integer getQuantity() {
         return quantity;
     }
@@ -61,7 +63,6 @@ public class Product {
         this.quantity = quantity;
     }
 
-    @Column(name = "price", nullable = false)
     public BigDecimal getPrice() {
         return price;
     }
