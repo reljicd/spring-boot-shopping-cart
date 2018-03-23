@@ -11,9 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-/**
- * Created by Dusan on 19-May-17.
- */
 @Controller
 public class RegistrationController {
 
@@ -35,19 +32,20 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        User userWithEnteredEmailExists = userService.findByEmail(user.getEmail());
-        if (userWithEnteredEmailExists != null) {
+
+        if (userService.findByEmail(user.getEmail()).isPresent()) {
             bindingResult
                     .rejectValue("email", "error.user",
                             "There is already a user registered with the email provided");
         }
-        User userWithEnteredUsernameExists = userService.findByUsername(user.getUsername());
-        if (userWithEnteredUsernameExists != null) {
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
             bindingResult
                     .rejectValue("username", "error.user",
                             "There is already a user registered with the username provided");
         }
+
+        ModelAndView modelAndView = new ModelAndView();
+
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("/registration");
         } else {
