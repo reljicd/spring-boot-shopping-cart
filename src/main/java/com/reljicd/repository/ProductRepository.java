@@ -3,8 +3,8 @@ package com.reljicd.repository;
 import com.reljicd.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- * Created by Dusan on 18-May-17.
- */
+import java.util.Optional;
+
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    Optional<Product> findById(Long id);
 }
