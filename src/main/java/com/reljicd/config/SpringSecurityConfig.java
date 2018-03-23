@@ -52,9 +52,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      * - anybody can visit /, /home, /about, /registration, /error, /blog/**, /post/**, /h2-console/**
      * - every other page needs authentication
      * - custom 403 access denied handler
-     *
-     * @param http
-     * @throws Exception
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -80,9 +77,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Authentication details
-     *
-     * @param auth
-     * @throws Exception
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -102,8 +96,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Configure and return BCrypt password encoder
-     *
-     * @return
      */
     @Bean
     public PasswordEncoder passwordEncoder() {

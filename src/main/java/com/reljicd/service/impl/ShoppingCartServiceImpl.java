@@ -1,6 +1,6 @@
 package com.reljicd.service.impl;
 
-import com.reljicd.controller.exception.NotEnoughProductsInStockException;
+import com.reljicd.exception.NotEnoughProductsInStockException;
 import com.reljicd.model.Product;
 import com.reljicd.repository.ProductRepository;
 import com.reljicd.service.ShoppingCartService;

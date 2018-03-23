@@ -1,4 +1,4 @@
-package com.reljicd.controller.exception;
+package com.reljicd.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Dusan
  */
 @ControllerAdvice
-public class ErrorController {
+public class GlobalExceptionHandler {
 
-    private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

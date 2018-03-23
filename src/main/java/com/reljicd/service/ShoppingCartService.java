@@ -1,6 +1,6 @@
 package com.reljicd.service;
 
-import com.reljicd.controller.exception.NotEnoughProductsInStockException;
+import com.reljicd.exception.NotEnoughProductsInStockException;
 import com.reljicd.model.Product;
 
 import java.math.BigDecimal;

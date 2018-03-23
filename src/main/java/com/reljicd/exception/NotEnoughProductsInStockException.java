@@ -1,4 +1,4 @@
-package com.reljicd.controller.exception;
+package com.reljicd.exception;
 
 import com.reljicd.model.Product;
 
