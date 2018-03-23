@@ -9,7 +9,7 @@
 <div th:fragment="products">
     <div class="panel-default well" th:each="product : ${products}">
         <div class="panel-heading">
-            <h1><a th:text="${product.name}" th:href="@{'/product/' + ${product.id}}">Title</a></h1>
+            <h1 th:text="${product.name}"></h1>
         </div>
         <h3 th:text="${product.description}" class="panel-body">Description</h3>
         <div class="row panel-footer">
