@@ -4,12 +4,14 @@ import com.reljicd.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 /**
  * Created by Dusan on 19-May-17.
  */
 public interface ProductService {
 
-    Product findById(Long id);
+    Optional<Product> findById(Long id);
 
     Page<Product> findAllProductsPageable(Pageable pageable);
 

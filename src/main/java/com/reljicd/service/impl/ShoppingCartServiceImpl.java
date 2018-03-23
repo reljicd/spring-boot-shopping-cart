@@ -97,10 +97,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public BigDecimal getTotal() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-            total = total.add(entry.getKey().getPrice().multiply(new BigDecimal(entry.getValue())));
-        }
-        return total;
+        return products.entrySet().stream()
+                .map(entry -> entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())))
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
     }
 }
