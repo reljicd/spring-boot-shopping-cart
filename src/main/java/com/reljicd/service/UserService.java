@@ -4,9 +4,6 @@ import com.reljicd.model.User;
 
 import java.util.Optional;
 
-/**
- * Created by Dusan on 19-May-17.
- */
 public interface UserService {
 
     Optional<User> findByUsername(String username);

@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.Optional;
 
-/**
- * Created by Dusan on 19-May-17.
- */
 @Service
 public class UserServiceImp implements UserService {
 

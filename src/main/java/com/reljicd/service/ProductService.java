@@ -6,9 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
-/**
- * Created by Dusan on 19-May-17.
- */
 public interface ProductService {
 
     Optional<Product> findById(Long id);
