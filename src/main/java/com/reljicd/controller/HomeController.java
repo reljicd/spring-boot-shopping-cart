@@ -25,7 +25,7 @@ public class HomeController {
         this.productService = productService;
     }
 
-    @GetMapping(value = {"/", "/home"})
+    @GetMapping("/home")
     public ModelAndView home(@RequestParam("page") Optional<Integer> page) {
 
         // Evaluate page. If requested parameter is null or less than 0 (to
