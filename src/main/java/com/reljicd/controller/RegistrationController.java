@@ -46,17 +46,14 @@ public class RegistrationController {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("/registration");
-        } else {
-            // Registration successful, save user
-            // Set user role to USER and set it as active
+        if (!bindingResult.hasErrors()) {
             userService.saveUser(user);
-
-            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("message", "User has been registered successfully!");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("/registration");
         }
+
+        modelAndView.setViewName("/registration");
+        
         return modelAndView;
     }
 }
