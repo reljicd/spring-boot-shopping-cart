@@ -16,8 +16,6 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
-    private static final int INITIAL_PAGE = 0;
-
     private final ProductService productService;
 
     @Autowired
@@ -26,14 +24,11 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public ModelAndView home(@RequestParam("page") Optional<Integer> page) {
+    public ModelAndView home(@RequestParam(value = "page", required = false, defaultValue = "0") int page) {
 
-        // Evaluate page. If requested parameter is null or less than 0 (to
-        // prevent exception), return initial size. Otherwise, return value of
-        // param. decreased by 1.
-        int evalPage = (page.orElse(0) < 1) ? INITIAL_PAGE : page.get() - 1;
+        int evalPage = (page != 0) ? page - 1 : page;
 
-        Page<Product> products = productService.findAllProductsPageable(new PageRequest(evalPage, 5));
+        Page<Product> products = productService.findAllProductsPageable( PageRequest.of(evalPage, 5));
         Pager pager = new Pager(products);
 
         ModelAndView modelAndView = new ModelAndView();
