@@ -1,10 +1,9 @@
 package com.reljicd.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 
 @Entity
