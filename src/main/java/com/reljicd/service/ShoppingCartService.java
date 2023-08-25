@@ -1,6 +1,6 @@
 package com.reljicd.service;
 
-import com.reljicd.exception.NotEnoughProductsInStockException;
+import com.reljicd.exception.*;
 import com.reljicd.model.Product;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public interface ShoppingCartService {
 
     Map<Product, Integer> getProductsInCart();
 
-    void checkout() throws NotEnoughProductsInStockException;
+    void checkout() throws NotEnoughProductsInStockException, ProductNotFoundException;
 
     BigDecimal getTotal();
 }

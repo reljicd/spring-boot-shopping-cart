@@ -1,6 +1,6 @@
 package com.reljicd.controller;
 
-import com.reljicd.exception.NotEnoughProductsInStockException;
+import com.reljicd.exception.*;
 import com.reljicd.service.ProductService;
 import com.reljicd.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +46,13 @@ public class ShoppingCartController {
     public ModelAndView checkout() {
         try {
             shoppingCartService.checkout();
-        } catch (NotEnoughProductsInStockException e) {
-            return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+        } catch (NotEnoughProductsInStockException | ProductNotFoundException e) {
+            if (e instanceof NotEnoughProductsInStockException) {
+                return shoppingCart().addObject("outOfStockMessage", e.getMessage());
+            }
+            ModelAndView modelAndView = new ModelAndView("/error");
+            modelAndView.addObject("errorMessage", ((ProductNotFoundException) e).getMessage());
+            return modelAndView;
         }
         return shoppingCart();
     }
