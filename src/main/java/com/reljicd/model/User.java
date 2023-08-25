@@ -7,7 +7,10 @@ import jakarta.validation.constraints.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "user")
+// The `user` keyword is reserved in newer version of H2.
+// https://stackoverflow.com/questions/70797504/spring-data-jpa-h2-database-is-returning-ddl-error-during-table-creation
+// @Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
