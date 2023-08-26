@@ -1,17 +1,20 @@
 package com.reljicd.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.autoconfigure.security.servlet.*;
+import org.springframework.context.annotation.*;
+import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.dao.*;
+import org.springframework.security.config.annotation.authentication.builders.*;
+import org.springframework.security.config.annotation.web.builders.*;
+import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.security.crypto.bcrypt.*;
+import org.springframework.security.crypto.password.*;
+import org.springframework.security.web.*;
+import org.springframework.security.web.access.*;
 
-import javax.sql.DataSource;
+import javax.sql.*;
 
 /**
  * Spring Security Configuration
@@ -21,77 +24,39 @@ import javax.sql.DataSource;
  * @author Dusan
  */
 @Configuration
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final AccessDeniedHandler accessDeniedHandler;
-
-    final DataSource dataSource;
-
-    @Value("${spring.admin.username}")
-    private String adminUsername;
-
-    @Value("${spring.admin.username}")
-    private String adminPassword;
-
-    @Value("${spring.queries.users-query}")
-    private String usersQuery;
-
-    @Value("${spring.queries.roles-query}")
-    private String rolesQuery;
-
-    @Autowired
-    public SpringSecurityConfig(AccessDeniedHandler accessDeniedHandler, DataSource dataSource) {
-        this.accessDeniedHandler = accessDeniedHandler;
-        this.dataSource = dataSource;
-    }
+@EnableWebSecurity
+public class SpringSecurityConfig {
 
     /**
-     * HTTPSecurity configurer
      * - roles ADMIN allow to access /admin/**
      * - roles USER allow to access /user/** and /newPost/**
      * - anybody can visit /, /home, /about, /registration, /error, /blog/**, /post/**, /h2-console/**
      * - every other page needs authentication
      * - custom 403 access denied handler
      */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationProvider authenticationProvider, AccessDeniedHandler accessDeniedHandler) throws Exception {
 
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/home", "/registration", "/error", "/h2-console/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
+        return http
+            .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()).disable())
+            .formLogin(login -> login
                 .loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-                // Fix for H2 console
-                .and().headers().frameOptions().disable();
+                .defaultSuccessUrl("/home"))
+            .authorizeHttpRequests(req -> req
+                .requestMatchers("/login", "/home", "/registration", "/error", "/403", "/webjars/**", "/css/**").permitAll()
+                .requestMatchers(PathRequest.toH2Console()).permitAll()
+                .anyRequest().authenticated())
+            .exceptionHandling(c -> c.accessDeniedHandler(accessDeniedHandler))
+            .authenticationProvider(authenticationProvider)
+            .build();
     }
 
-
-    /**
-     * Authentication details
-     */
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Database authentication
-        auth.
-                jdbcAuthentication()
-                .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-                .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder());
-
-        // In memory authentication
-        auth.inMemoryAuthentication()
-                .withUser(adminUsername).password(adminPassword).roles("ADMIN");
+    @Bean
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsServiceImpl) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsServiceImpl);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
     /**
