@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    show-sql: true
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ROLE_ADMIN
+
+logging.level.org.springframework.security: TRACE

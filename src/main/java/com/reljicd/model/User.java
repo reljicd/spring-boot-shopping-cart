@@ -1,15 +1,16 @@
 package com.reljicd.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
-import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "user")
+// The `user` keyword is reserved in newer version of H2.
+// https://stackoverflow.com/questions/70797504/spring-data-jpa-h2-database-is-returning-ddl-error-during-table-creation
+// @Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -23,13 +24,13 @@ public class User {
     private String email;
 
     @Column(name = "password", nullable = false)
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
+    @Size(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     @JsonIgnore
     private String password;
 
     @Column(name = "username", nullable = false, unique = true)
-    @Length(min = 5, message = "*Your username must have at least 5 characters")
+    @Size(min = 5, message = "*Your username must have at least 5 characters")
     @NotEmpty(message = "*Please provide your name")
     private String username;
 
@@ -44,7 +45,7 @@ public class User {
     @Column(name = "active", nullable = false)
     private int active;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 

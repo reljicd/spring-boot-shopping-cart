@@ -1,6 +1,6 @@
 package com.reljicd.service.impl;
 
-import com.reljicd.exception.NotEnoughProductsInStockException;
+import com.reljicd.exception.*;
 import com.reljicd.model.Product;
 import com.reljicd.repository.ProductRepository;
 import com.reljicd.service.ShoppingCartService;
@@ -81,16 +81,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @throws NotEnoughProductsInStockException
      */
     @Override
-    public void checkout() throws NotEnoughProductsInStockException {
+    public void checkout() throws NotEnoughProductsInStockException, ProductNotFoundException {
         Product product;
         for (Map.Entry<Product, Integer> entry : products.entrySet()) {
             // Refresh quantity for every product before checking
-            product = productRepository.findOne(entry.getKey().getId());
+            product = productRepository.findById(entry.getKey().getId()).orElseThrow(() -> new ProductNotFoundException(entry.getKey()));
             if (product.getQuantity() < entry.getValue())
                 throw new NotEnoughProductsInStockException(product);
             entry.getKey().setQuantity(product.getQuantity() - entry.getValue());
         }
-        productRepository.save(products.keySet());
+        productRepository.saveAll(products.keySet());
         productRepository.flush();
         products.clear();
     }

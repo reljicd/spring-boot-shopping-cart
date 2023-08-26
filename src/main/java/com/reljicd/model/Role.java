@@ -1,6 +1,7 @@
 package com.reljicd.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 
 @Entity
